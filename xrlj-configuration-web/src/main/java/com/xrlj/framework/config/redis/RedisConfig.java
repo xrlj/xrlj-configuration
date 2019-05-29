@@ -1,4 +1,4 @@
-package com.xrlj.framework.config;
+package com.xrlj.framework.config.redis;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
