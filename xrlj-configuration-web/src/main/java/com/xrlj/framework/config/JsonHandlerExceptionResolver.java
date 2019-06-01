@@ -7,6 +7,7 @@ import com.xrlj.utils.time.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
@@ -120,7 +121,10 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
             ApiException apiException = (ApiException) throwable;
             data.put("message", apiException.getMessage());
             data.put("status", apiException.getCode());
-        } else {
+        } else if (throwable instanceof HttpMessageNotReadableException) {
+			data.put("message","正确的请求body格式为application/json");
+			data.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
+		} else {
 			data.put("message","系统内部异常,请联系技术开发人员");
 			data.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
