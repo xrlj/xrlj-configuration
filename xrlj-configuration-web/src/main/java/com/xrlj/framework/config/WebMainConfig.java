@@ -1,6 +1,7 @@
 package com.xrlj.framework.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xrlj.framework.dao.RedisDao;
 import com.xrlj.framework.filter.IndexFilter;
 import com.xrlj.framework.spring.mvc.api.ApiResult;
 import org.springframework.beans.factory.BeanFactory;
@@ -18,6 +19,7 @@ import org.springframework.hateoas.RelProvider;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -142,5 +144,10 @@ public class WebMainConfig {
     public TomcatServletWebServerFactory tomcatServletWebServerFactory() {
         return new TomcatServletWebServerFactory();
 
+    }
+
+    @Bean
+    public RedisDao redisDao() {
+        return new RedisDao();
     }
 }
