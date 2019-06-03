@@ -2,13 +2,11 @@ package com.xrlj.framework.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * 跨域配置信息对象。
  */
-@Component
-@Configuration(value = "customCorsProperties")
+@Configuration
 @ConfigurationProperties(prefix = "custom.cors")
 public class CustomCorsProperties {
 

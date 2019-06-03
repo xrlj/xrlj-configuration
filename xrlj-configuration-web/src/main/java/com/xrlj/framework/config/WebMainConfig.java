@@ -19,7 +19,6 @@ import org.springframework.hateoas.RelProvider;
 import org.springframework.hateoas.hal.CurieProvider;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -100,12 +99,12 @@ public class WebMainConfig {
     }
 
     /**
-     * 设置跨域请求。
+     * 设置跨域请求。过滤器。
      * @param
      * @return
      */
     @Bean
-    public CorsFilter corsFilter( @Autowired CustomCorsProperties customCorsProperties) {
+    public CorsFilter corsFilter(CustomCorsProperties customCorsProperties) {
         //1.添加CORS配置信息
         CorsConfiguration config = new CorsConfiguration();
         //放行哪些原始域
