@@ -2,6 +2,7 @@ package com.xrlj.framework.config;
 
 import com.xrlj.framework.spring.mvc.api.withhttpheader.CustomRequestMappingHandlerMapping;
 import com.xrlj.framework.spring.mvc.sensitive.SensitiveFormatAnnotationFormatterFactory;
+import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.FormatterRegistry;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
 import java.util.List;
 
 /**
@@ -53,14 +56,10 @@ public abstract class AbstractWebConfiguration extends WebMvcConfigurationSuppor
     }
 
 
-    /**
-     * 全局验证器
-     *
-     * @return
-     */
     @Override
     protected Validator getValidator() {
-//        return new GlobalValidator(); //设置自己的全局表单校验器后，hibernate-valid的将失效
+//        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure().failFast(true).buildValidatorFactory();
+//        javax.validation.Validator validator = validatorFactory.getValidator();
         return super.getValidator();
     }
 

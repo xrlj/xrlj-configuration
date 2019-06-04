@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xrlj.framework.dao.RedisDao;
 import com.xrlj.framework.filter.IndexFilter;
 import com.xrlj.framework.spring.mvc.api.ApiResult;
+import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -23,6 +24,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -149,4 +153,15 @@ public class WebMainConfig {
     public RedisDao redisDao() {
         return new RedisDao();
     }
+
+    /**
+     * 参数校验快速失败。上面一个校验失败，不再校验下面的。加上报错，和WebMvcConfigurationSupport中的冲突。
+     * @return
+     */
+//    @Bean
+//    public Validator validator() {
+//        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class).configure().failFast(true).buildValidatorFactory();
+//        Validator validator = validatorFactory.getValidator();
+//        return validator;
+//    }
 }
