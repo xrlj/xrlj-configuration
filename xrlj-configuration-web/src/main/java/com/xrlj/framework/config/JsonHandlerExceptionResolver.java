@@ -21,11 +21,14 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 统一异常处理。内部服务。
@@ -140,6 +143,10 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
 					data.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
 				}
 			}
+		} else if (throwable instanceof ConstraintViolationException) {
+			ConstraintViolationException constraintViolationException = (ConstraintViolationException) throwable;
+			Set<ConstraintViolation<?>> s = constraintViolationException.getConstraintViolations();
+			String erorMsg = constraintViolationException.getMessage();
 		} else {
 			data.put("message","系统内部异常,请联系技术开发人员");
 			data.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
