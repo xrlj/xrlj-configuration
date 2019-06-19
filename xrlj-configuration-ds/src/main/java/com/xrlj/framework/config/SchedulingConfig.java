@@ -26,7 +26,7 @@ public class SchedulingConfig {
     @Qualifier(value = "dynamicDataSource")
     private DynamicDataSource dynamicDataSource;
 
-    @Scheduled(cron = "${scheduling.cron.validation-datasource-check}")
+    @Scheduled(cron = "${scheduling.cron.validation-datasource-check:0/5 * * * * ?}")
     public void validationDataSource() {
         Map<Object, Object> registerDataSource = dynamicDataSource.getMultipleDataSourceFull();
         Map<Object, Object> availableDataSource = dynamicDataSource.getMultipleDataSource();
