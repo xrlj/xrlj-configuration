@@ -39,7 +39,7 @@ public class JsonHandlerExceptionResolverOpen extends SimpleMappingExceptionReso
 
 	@Override
 	public int getOrder() {
-		return -1;
+		return -100;
 	}
 
 	@Override
