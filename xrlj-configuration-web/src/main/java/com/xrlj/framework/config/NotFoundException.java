@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-@Controller
+/**
+ * 报路径不存在错误，请求方式GET或者POST不对。都是进入这里。这里弃用。<br>
+ *     在具体项目中继承并注入。
+ */
+//@Controller
 public class NotFoundException implements ErrorController {
 
     @Override

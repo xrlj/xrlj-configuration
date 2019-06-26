@@ -5,6 +5,7 @@ import com.xrlj.framework.dao.RedisDao;
 import com.xrlj.framework.filter.IndexFilter;
 import com.xrlj.framework.spring.mvc.api.ApiResult;
 import org.hibernate.validator.HibernateValidator;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -56,8 +57,6 @@ public class WebMainConfig {
     }
 
     private static final String DELEGATING_REL_PROVIDER_BEAN_NAME = "_relProvider";
-//    private static final String LINK_DISCOVERER_REGISTRY_BEAN_NAME = "_linkDiscovererRegistry";
-//    private static final String HAL_OBJECT_MAPPER_BEAN_NAME = "_halObjectMapper";
 
     /**
      * 消息转换。集成超媒体连接。拥有内部服务
@@ -152,6 +151,11 @@ public class WebMainConfig {
     @Bean
     public RedisDao redisDao() {
         return new RedisDao();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     /**
