@@ -56,6 +56,19 @@
             <artifactId>jooq-codegen</artifactId>
         </dependency>
 
+        <!--feign方式消费服务-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--hystrix熔断器-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
     <build>
