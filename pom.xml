@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>com.xrlj</groupId>
 		<artifactId>xrlj-parent</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.xrlj</groupId>
 	<artifactId>xrlj-configuration</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>xrlj-configuration</name>
 	<description>spring boot 配置</description>

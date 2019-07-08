@@ -5,10 +5,10 @@
     <parent>
         <groupId>com.xrlj</groupId>
         <artifactId>xrlj-configuration</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>xrlj-configuration-ds</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>xrlj-configuration-ds</name>
