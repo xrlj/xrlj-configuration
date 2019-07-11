@@ -49,6 +49,9 @@ public class FeignConfiguration {
         @Override
         public void apply(RequestTemplate template) {
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (attributes == null) {
+                return;
+            }
             HttpServletRequest request = attributes.getRequest();
 
             //api版本信息
