@@ -149,11 +149,6 @@ public class WebMainConfig {
     }
 
     @Bean
-    public RedisDao redisDao() {
-        return new RedisDao();
-    }
-
-    @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
