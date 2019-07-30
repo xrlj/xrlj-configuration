@@ -16,14 +16,12 @@
 	<description>spring boot 配置</description>
 
 	<properties>
-		<xrlj-framework.version>0.0.1</xrlj-framework.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.xrlj</groupId>
 			<artifactId>xrlj-framework</artifactId>
-			<version>${xrlj-framework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
