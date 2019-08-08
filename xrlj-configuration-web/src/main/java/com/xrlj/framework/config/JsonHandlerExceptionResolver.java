@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
@@ -94,7 +95,7 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
 				response.addHeader("m-error-type","service-inner");
 				PrintWriter out = response.getWriter();
 				try {
-					handleExceptionJsonMessage(out, ex, callbackName);
+					handleExceptionJsonMessage(out, ex, callbackName, response);
 				} finally {
 					out.close();
 				}
@@ -107,7 +108,7 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
 		});
 	}
 
-	public void handleExceptionJsonMessage(PrintWriter out, Exception ex, String callbackName) {
+	public void handleExceptionJsonMessage(PrintWriter out, Exception ex, String callbackName, HttpServletResponse response) {
 		Map<String, Object> data = new LinkedHashMap<>();
 		data.put("service",appName);
 		Throwable throwable;
@@ -130,7 +131,7 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
             data.put("status", apiException.getCode());
         } else if (throwable instanceof HttpMessageNotReadableException) {
 			data.put("message","请求body格式为application/json");
-			data.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
+//			data.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
 		} else if (throwable instanceof MethodArgumentNotValidException) {
 			MethodArgumentNotValidException e = (MethodArgumentNotValidException) throwable;
 			BindingResult bindingResult = e.getBindingResult();
@@ -140,17 +141,24 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
 					FieldError fieldError = (FieldError) error;
 					String errorMsg = fieldError.getDefaultMessage();
 					data.put("message", String.format("参数%s校验错误：%s",fieldError.getField(), errorMsg));
-					data.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+//					data.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
 				}
 			}
 		} else if (throwable instanceof ConstraintViolationException) {
 			ConstraintViolationException constraintViolationException = (ConstraintViolationException) throwable;
 			Set<ConstraintViolation<?>> s = constraintViolationException.getConstraintViolations();
 			String erorMsg = constraintViolationException.getMessage();
+			data.put("message", erorMsg);
+		}  else if (throwable instanceof MissingServletRequestParameterException) {
+			MissingServletRequestParameterException missingServletRequestParameterException = (MissingServletRequestParameterException) throwable;
+			String parName = missingServletRequestParameterException.getParameterName();
+			data.put("message", String.format("缺少必传参数%s", parName));
+//			data.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
 		} else {
 			data.put("message","系统内部异常,请联系技术开发人员");
-			data.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
+//			data.put("status",HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
+		data.put("status", response.getStatus()); //拿系统异常返回的状态码
 		data.put("type", throwable.getClass().getCanonicalName());
 		data.put("error",stringWriter.toString());
 		String json = JSON.toJSONString(data, SerializerFeature.DisableCircularReferenceDetect);
