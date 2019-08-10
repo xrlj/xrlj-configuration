@@ -10,9 +10,12 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 
 /**
  * 放在扫描包下。全局有效。所有feign客户端有效。
+ * 配合自定义熔断策略。
+ * @see FeignHystrixConcurrencyStrategy
  */
 @Configuration
 public class FeignConfiguration {
@@ -48,24 +51,25 @@ public class FeignConfiguration {
 
         @Override
         public void apply(RequestTemplate template) {
+            //配置自定义熔断策略或者在.yml中配置熔断策略为hystrix.command.default.execution.isolation.strategy: SEMAPHORE
+            //否则这里返回null
             ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             if (attributes == null) {
                 return;
             }
             HttpServletRequest request = attributes.getRequest();
 
-            //api版本信息
-            String apiVersion = request.getHeader("Content-Version");
-            if (!StringUtils.isEmpty(apiVersion)) {
-                template.header("Content-Version", apiVersion);
-            }
-
-            //获取客户端传过来token
-            String authorization = request.getHeader("Authorization");
-            String token = StringUtils.removeStart(authorization, "Bearer ");
-            if (!StringUtils.isEmpty(token)) {
-                //添加token
-                template.header("Authorization", "Bearer ".concat(token));
+            //添加所有头信息。feign调用，在各组件中传递。保持各组件之间session一致性，同一个sessionId。
+            Enumeration<String> headerNames = request.getHeaderNames();
+            if (headerNames != null) {
+                while (headerNames.hasMoreElements()) {
+                    String name = headerNames.nextElement();
+                    Enumeration<String> values = request.getHeaders(name);
+                    while (values.hasMoreElements()) {
+                        String value = values.nextElement();
+                        template.header(name, value);
+                    }
+                }
             }
         }
     }
