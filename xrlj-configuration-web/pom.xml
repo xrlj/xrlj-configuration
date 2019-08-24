@@ -51,33 +51,6 @@
             <version>13.0</version>
             <scope>compile</scope>
         </dependency>
-
     </dependencies>
-
-    <build>
-        <plugins>
-            <!--打包成lib-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                    <maxmem>1024m</maxmem>
-                    <meminitial>256m</meminitial>
-                    <encoding>UTF-8</encoding>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <debug>true</debug>
-                    <debuglevel>lines,vars,source</debuglevel>
-                    <!-- [#2413] Make compiler warnings a bit more visible But don't fail
-                        (yet) -->
-                    <compilerArgs>
-                        <arg>-Xlint:varargs</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-
-        </plugins>
-    </build>
 
 </project>

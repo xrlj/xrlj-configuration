@@ -33,4 +33,14 @@
 		<module>xrlj-configuration-web</module>
 	</modules>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+	</build>
+
 </project>
