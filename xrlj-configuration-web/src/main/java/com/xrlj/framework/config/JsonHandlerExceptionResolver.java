@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xrlj.framework.spring.mvc.api.ApiException;
 import com.xrlj.utils.time.DateUtil;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,6 @@ import java.util.Set;
 @Slf4j
 public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver {
 
-	@Value("${spring.application.name}")
 	private String appName;
 
 	/**
@@ -52,6 +52,11 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
 	public void setJsonpCallbackParameterName(String jsonpCallbackParameterName) {
 		this.jsonpCallbackParameterName = jsonpCallbackParameterName;
 	}
+
+	public JsonHandlerExceptionResolver(String appName) {
+		this.appName = appName;
+	}
+
 
 	/**
 	 * 改变异常捕捉链中的顺序。改成-1，排到最前面。
@@ -140,7 +145,7 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
 					if (error instanceof FieldError) {
 						FieldError fieldError = (FieldError) error;
 						String errorMsg = fieldError.getDefaultMessage();
-						data.put("message", String.format("参数%s校验错误：%s",fieldError.getField(), errorMsg));
+						data.put("message", String.format("参数%s校验错误：%s", fieldError.getField(), errorMsg));
 					}
 				}
 			} else if (throwable instanceof ConstraintViolationException) {
@@ -152,8 +157,12 @@ public class JsonHandlerExceptionResolver extends SimpleMappingExceptionResolver
 				MissingServletRequestParameterException missingServletRequestParameterException = (MissingServletRequestParameterException) throwable;
 				String parName = missingServletRequestParameterException.getParameterName();
 				data.put("message", String.format("缺少必传参数%s", parName));
+//			} else if (throwable instanceof FeignException.InternalServerError) {
+//				data.put("message", throwable.getMessage());
+//			} else if (throwable instanceof  FeignException) {
+//				data.put("message", throwable.getMessage());
 			} else {
-				data.put("message","系统内部异常,请联系技术开发人员");
+				data.put("message", "系统内部异常,请联系技术开发人员");
 			}
 			data.put("status", response.getStatus()); //拿系统异常返回的状态码
 		}

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.util.List;
 
@@ -35,5 +36,14 @@ public abstract class AbstractInnerWebConfiguration extends AbstractWebConfigura
 
         //添加其它默认消息转换器
         super.addDefaultHttpMessageConverters(converters);
+    }
+
+    /**
+     * 统一异常处理。
+     * @param exceptionResolvers
+     */
+    @Override
+    protected void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+        exceptionResolvers.add(new JsonHandlerExceptionResolver(appName));
     }
 }

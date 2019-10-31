@@ -2,6 +2,7 @@ package com.xrlj.framework.config;
 
 import com.xrlj.framework.spring.mvc.api.withhttpheader.CustomRequestMappingHandlerMapping;
 import com.xrlj.framework.spring.mvc.sensitive.SensitiveFormatAnnotationFormatterFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -11,6 +12,9 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * 定义消息转换器
  */
 public abstract class AbstractWebConfiguration extends WebMvcConfigurationSupport {
+
+    @Value("${spring.application.name}")
+    protected String appName;
 
     @Override
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
