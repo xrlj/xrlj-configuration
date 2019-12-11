@@ -44,6 +44,28 @@ public class CustomObjectMapper extends ObjectMapper {
             }
         });*/
 
+        // Long类型转成字符串输出到前端。Long太长的话（如雪花算法ID），在前端会丢失精度，所以转成字符串类型返回。
+        module.addSerializer(Long.class, new JsonSerializer<Long>() {
+            @Override
+            public void serialize(Long aLong, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+                if (aLong != null) {
+                    jsonGenerator.writeString(String.valueOf(aLong.longValue()));
+                } else {
+                    jsonGenerator.writeString(String.valueOf(0L));
+                }
+            }
+        });
+        module.addSerializer(long.class, new JsonSerializer<Long>() {
+            @Override
+            public void serialize(Long aLong, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+                if (aLong != null) {
+                    jsonGenerator.writeString(String.valueOf(aLong.longValue()));
+                } else {
+                    jsonGenerator.writeString(String.valueOf(0L));
+                }
+            }
+        });
+
         //日期
         module.addSerializer(Date.class, new JsonSerializer<Date>() {
             @Override
