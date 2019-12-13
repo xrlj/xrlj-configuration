@@ -33,6 +33,15 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
             if (isStringType(writer)) {
                 writer.assignNullSerializer(new CustomObjectMapper.NullStringJsonSerializer());
             }
+            if (isBooleanType(writer)) {
+                writer.assignNullSerializer(new CustomObjectMapper.NullBooleanJsonSerializer());
+            }
+            if (isNumberType(writer)) {
+                writer.assignNullSerializer(new CustomObjectMapper.NullNumberJsonSerializer());
+            }
+            if (isObjectType(writer)) {
+                writer.assignNullSerializer(new CustomObjectMapper.NullObjectJsonSerializer());
+            }
         }
         return beanProperties;
     }
@@ -67,5 +76,13 @@ public class MyBeanSerializerModifier extends BeanSerializerModifier {
     private boolean isBooleanType(BeanPropertyWriter writer) {
         Class<?> clazz = writer.getType().getRawClass();
         return clazz.equals(Boolean.class);
+    }
+
+    /**
+     * 是否是对象
+     */
+    private boolean isObjectType(BeanPropertyWriter writer) {
+        Class<?> clazz = writer.getType().getRawClass();
+        return clazz.isLocalClass();
     }
 }

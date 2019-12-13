@@ -1,29 +1,33 @@
 package com.xrlj.framework.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
-import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 /**
- * 自定义序列化处理器
+ * 自定义序列化处理器.
+ * <p>
+ * long类型前端精度丢失问题（超过53位二进制数），
+ * 建议在需要转换的字段上加注解 @JsonFormat(shape = JsonFormat.Shape.STRING)
+ * 不做整体数值转换，防止无需转换的long类型也转为string
+ * </p>
  */
 public class CustomObjectMapper extends ObjectMapper {
 
     public CustomObjectMapper() {
         super();
+        setSerializationInclusion(JsonInclude.Include.ALWAYS);
+        setSerializerFactory(getSerializerFactory().withSerializerModifier(new MyBeanSerializerModifier()));
 
         SimpleModule module = new SimpleModule();
-
         //日期
         module.addSerializer(Date.class, new JsonSerializer<Date>() {
             @Override

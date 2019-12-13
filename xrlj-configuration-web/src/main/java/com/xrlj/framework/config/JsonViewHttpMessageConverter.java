@@ -29,7 +29,6 @@ public class JsonViewHttpMessageConverter
 	 */
 	public JsonViewHttpMessageConverter(Class<?> type) {
 		super(type);
-		getObjectMapper().setSerializerFactory(getObjectMapper().getSerializerFactory().withSerializerModifier(new MyBeanSerializerModifier()));
 	}
 
     @Override
