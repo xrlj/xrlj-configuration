@@ -1,6 +1,7 @@
 package com.xrlj.framework.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xrlj.framework.core.json.CustomObjectMapper;
 import com.xrlj.framework.dao.RedisDao;
 import com.xrlj.framework.filter.IndexFilter;
 import com.xrlj.framework.spring.mvc.api.ApiResult;
