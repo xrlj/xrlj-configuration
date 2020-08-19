@@ -30,11 +30,11 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     protected Object determineCurrentLookupKey() {
         if (dsMap.size() == 0) {
             log.error(">>>>>>>>>>>>>>>>无可用数据源！");
-            throw APIs.error(1000,"数据源异常!",null);
+            throw APIs.error(10000,"数据源异常!",null);
         }
         if (!dsMap.containsKey(DSType.Myself.MASTER)) {
             log.error(">>>>>>>>>>>>>>>>主数据源挂机！");
-            throw APIs.error(1001,"数据源异常!",null);
+            throw APIs.error(10001,"数据源异常!",null);
         }
 
         String currentDs = DataSourceContextHolder.getDS();

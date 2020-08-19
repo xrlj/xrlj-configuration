@@ -12,7 +12,8 @@ public final class DataSourceSpyUtils {
 
     public static DataSource conversion(Environment environment, DataSource dynamicDataSource) {
         if (environment.acceptsProfiles(Profiles.of("dev")) || environment.acceptsProfiles(Profiles.of("test"))
-                || environment.acceptsProfiles(Profiles.of("update"))) {// log4jdbc打印sql日志
+                || environment.acceptsProfiles(Profiles.of("update"))
+        || environment.acceptsProfiles(Profiles.of("local"))) {// log4jdbc打印sql日志
             DataSource dsSpy = new DataSourceSpy(dynamicDataSource);
             return dsSpy;
         }
