@@ -51,4 +51,10 @@ public class MyselfDbJpaConfig {
 		return new JpaProperties();
 	}
 
+	/*@PostConstruct
+	public void init(){
+		GenericConversionService conversionService = (GenericConversionService) DefaultConversionService.getSharedInstance();
+		conversionService.addConverter(new JPAConverter());
+	}*/
+
 }

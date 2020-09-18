@@ -18,6 +18,15 @@
 	<properties>
 	</properties>
 
+	<modules>
+		<module>xrlj-configuration-ds</module>
+		<module>xrlj-configuration-web</module>
+		<module>xrlj-configuration-ds-core</module>
+		<module>xrlj-configuration-ds-mybatis</module>
+		<module>xrlj-configuration-ds-jpa</module>
+		<module>xrlj-configuration-ds-jooq</module>
+	</modules>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.xrlj</groupId>
@@ -28,10 +37,31 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 	</dependencies>
-	<modules>
-		<module>xrlj-configuration-ds</module>
-		<module>xrlj-configuration-web</module>
-	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.xrlj</groupId>
+				<artifactId>xrlj-configuration-ds-core</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xrlj</groupId>
+				<artifactId>xrlj-configuration-ds-jpa</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xrlj</groupId>
+				<artifactId>xrlj-configuration-ds-jooq</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xrlj</groupId>
+				<artifactId>xrlj-configuration-ds-mybatis</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
