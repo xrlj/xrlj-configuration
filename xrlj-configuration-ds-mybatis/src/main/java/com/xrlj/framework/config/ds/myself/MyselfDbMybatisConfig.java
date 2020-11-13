@@ -33,6 +33,7 @@ public class MyselfDbMybatisConfig {
 	public SqlSessionFactory sqlSessionFactory() throws Exception {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
 		factoryBean.setDataSource(DataSourceSpyUtils.conversion(env,dynamicDataSource));
+		factoryBean.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml")); //配置文件
 		factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml")); // 映射xml文件
 		return factoryBean.getObject();
 	}
