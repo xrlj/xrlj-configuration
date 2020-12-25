@@ -3,7 +3,6 @@ package com.xrlj.framework.config;
 import feign.Logger;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -67,6 +66,12 @@ public class FeignConfiguration {
                     Enumeration<String> values = request.getHeaders(name);
                     while (values.hasMoreElements()) {
                         String value = values.nextElement();
+                        // 跳过 content-length
+                        // https://blog.csdn.net/qq_39986681/article/details/107138740
+                        // https://juejin.cn/post/6844903939079421966
+                        if (name.equals("content-length")){
+                            continue;
+                        }
                         template.header(name, value);
                     }
                 }
